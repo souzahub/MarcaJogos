@@ -1,0 +1,48 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{16E40F84-3601-4AD8-B9BE-4DDE736A6D05}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="MarcaQueda.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="..\..\toastmessage\ToastMessage.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="MarcaQueda">
+        <MSBuild Projects="MarcaQueda.dproj"/>
+    </Target>
+    <Target Name="MarcaQueda:Clean">
+        <MSBuild Projects="MarcaQueda.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="MarcaQueda:Make">
+        <MSBuild Projects="MarcaQueda.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="ToastMessage">
+        <MSBuild Projects="..\..\toastmessage\ToastMessage.dproj"/>
+    </Target>
+    <Target Name="ToastMessage:Clean">
+        <MSBuild Projects="..\..\toastmessage\ToastMessage.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="ToastMessage:Make">
+        <MSBuild Projects="..\..\toastmessage\ToastMessage.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="MarcaQueda;ToastMessage"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="MarcaQueda:Clean;ToastMessage:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="MarcaQueda:Make;ToastMessage:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>

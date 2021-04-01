@@ -13,53 +13,75 @@ uses
 type
   TToastLength = (LongToast, ShortToast);
   TfrmApplication = class(TForm)
-    Layout1: TLayout;
     Image1: TImage;
-    Layout3: TLayout;
-    Layout6: TLayout;
-    RoundRect1: TRoundRect;
-    Layout4: TLayout;
+    LtJogador1: TLayout;
     Layout2: TLayout;
+    edValorusu1: TLabel;
     Layout8: TLayout;
     img_open: TImage;
     Image2: TImage;
     Image3: TImage;
     Image4: TImage;
-    lbPopup: TListBox;
-    ListBoxItem1: TListBoxItem;
-    btnConfig: TSpeedButton;
-    ListBoxItem2: TListBoxItem;
-    btnInfo: TSpeedButton;
-    ShadowEffect1: TShadowEffect;
     ToolBar1: TToolBar;
     Label1: TLabel;
     btnMore: TSpeedButton;
     SpeedButton1: TSpeedButton;
     btnSair: TSpeedButton;
-    edValorusu1: TLabel;
-    Layout9: TLayout;
+    LtJogador2: TLayout;
     Layout5: TLayout;
     edValorusu2: TLabel;
-    Layout10: TLayout;
-    RoundRect3: TRoundRect;
-    lbTtalQuedaUsu1: TLabel;
-    lbTtalQuedaUsu2: TLabel;
-    lbTotal: TLabel;
+    lbJogador1: TLabel;
+    lbJogador2: TLabel;
+    lbJogador3: TLabel;
+    Layout4: TLayout;
+    Layout9: TLayout;
+    edValorusu3: TLabel;
+    lbJogador4: TLabel;
+    LT: TLayout;
+    Layout1: TLayout;
+    Layout11: TLayout;
+    Layout6: TLayout;
+    RoundRect1: TRoundRect;
+    edUsu1: TEdit;
     Layout7: TLayout;
     RoundRect4: TRoundRect;
     edUsu2: TEdit;
-    lbJogador1: TLabel;
-    lbJogador2: TLabel;
-    LayoutPontuacao: TLayout;
-    Panel1: TPanel;
-    edPontMax: TEdit;
-    Label2: TLabel;
-    sbCancel: TSpeedButton;
-    sbConfirm: TSpeedButton;
-    Image5: TImage;
+    Layout3: TLayout;
+    Layout12: TLayout;
+    RoundRect2: TRoundRect;
+    edUsu3: TEdit;
+    Layout13: TLayout;
+    RoundRect5: TRoundRect;
+    edUsu4: TEdit;
+    LtJogador4: TLayout;
+    Layout15: TLayout;
+    edValorusu4: TLabel;
+    Layout14: TLayout;
+    Layout10: TLayout;
+    lbTtalQuedaUsu1: TLabel;
+    lbTtalQuedaUsu2: TLabel;
+    lbTotal: TLabel;
+    Image6: TImage;
+    Image7: TImage;
+    Image8: TImage;
+    Image9: TImage;
+    lbPopup: TListBox;
+    ListBoxItem1: TListBoxItem;
+    btnConfig: TSpeedButton;
+    ListBoxItem2: TListBoxItem;
+    btnInfo: TSpeedButton;
     ListBoxItem3: TListBoxItem;
     sbLimpar: TSpeedButton;
-    edUsu1: TEdit;
+    ShadowEffect1: TShadowEffect;
+    lbTtalQuedaUsu4: TLabel;
+    lbTtalQuedaUsu3: TLabel;
+    LayoutPontuacao: TLayout;
+    Panel1: TPanel;
+    Image5: TImage;
+    Label2: TLabel;
+    edPontMax: TEdit;
+    sbCancel: TSpeedButton;
+    sbConfirm: TSpeedButton;
     procedure btnSairClick(Sender: TObject);
     procedure SpeedButton1Click(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -74,13 +96,17 @@ type
     procedure sbCancelClick(Sender: TObject);
     procedure btnInfoClick(Sender: TObject);
     procedure ddddddClick(Sender: TObject);
+    procedure Image4Click(Sender: TObject);
+    procedure Image9Click(Sender: TObject);
+    procedure Image8Click(Sender: TObject);
+    procedure Image6Click(Sender: TObject);
+    procedure Image7Click(Sender: TObject);
   private
     { Private declarations }
     var
-    xPontuacao, xTotalQueda: Integer;
-    xJogador1, xJogador2 : Boolean;
-    xQeda1, xVal2, xJog2Qeda1, xJog2Val2: Integer;
-
+    xPontuacao, xTotalQueda : Integer;
+    xJogador1, xJogador2, xJogador3, xJogador4 : Boolean;
+    xQeda1, xVal2, xJog2Qeda1, xJog2Val2 , xJog3Qeda, xJog4Val2, xJog4Qeda, xJog4Val: Integer;
 
   public
     { Public declarations }
@@ -116,6 +142,7 @@ uses
 {$ENDIF}
 
 {$R *.fmx}
+{$R *.LgXhdpiTb.fmx ANDROID}
 
 procedure TfrmApplication.btnConfigClick(Sender: TObject);
 begin
@@ -168,12 +195,22 @@ begin
   xPontuacao := 0 ;
   edUsu1.Text := '';
   edUsu2.Text := '';
+  edUsu3.Text := '';
+  edUsu4.Text := '';
+
   lbPopup.Visible := false;
   edValorusu1.Text := IntToStr( 0);
   edValorusu2.Text := IntToStr( 0);
+  edValorusu3.Text := IntToStr( 0);
+  edValorusu4.Text := IntToStr( 0);
+
   lbTtalQuedaUsu1.Text := 'Total Quedas Jogador(s) 1:  ' +IntToStr( 0 );
 
   lbTtalQuedaUsu2.Text := 'Total Quedas Jogador(s) 2:  ' +IntToStr( 0 );
+
+  lbTtalQuedaUsu3.Text := 'Total Quedas Jogador(s) 3:  ' +IntToStr( 0 );
+
+  lbTtalQuedaUsu4.Text := 'Total Quedas Jogador(s) 4:  ' +IntToStr( 0 );
 
   LayoutPontuacao.Visible := False;
 end;
@@ -209,6 +246,20 @@ var
 xUsu2, xVa2 : Integer;
 
 begin
+  if edValorusu2.Text = IntToStr(0) then exit;
+
+  xVa2 :=  StrToInt (edValorusu2.Text);
+  xUsu2 := xVa2;
+  Inc(xUsu2,-1);
+  edValorusu2.Text := IntToStr(xUsu2);
+
+end;
+
+procedure TfrmApplication.Image4Click(Sender: TObject);
+var
+xUsu2, xVa2 : Integer;
+
+begin
   if  xPontuacao <= 0 then
   begin
     {$IFDEF ANDROID}
@@ -237,7 +288,110 @@ begin
     end;
 
   end;
+end;
 
+procedure TfrmApplication.Image6Click(Sender: TObject);
+var
+xUsu4, xVa4 : Integer;
+
+begin
+  if edValorusu4.Text = IntToStr(0) then exit;
+
+  xVa4 :=  StrToInt (edValorusu4.Text);
+  xUsu4 := xVa4;
+  Inc(xUsu4,-1);
+  edValorusu4.Text := IntToStr(xUsu4);
+end;
+
+procedure TfrmApplication.Image7Click(Sender: TObject);
+var
+xUsu4, xVa4 : Integer;
+
+begin
+  if  xPontuacao <= 0 then
+  begin
+    {$IFDEF ANDROID}
+    Toast ('Informe a Pontuação Máxima em (configuração )', LongToast);
+    {$ENDIF ANDROID}
+    exit;
+  end;
+
+  xJogador1 := False;
+  xJogador2 := False;
+  xJogador3 := False;
+  xJogador4 := True;
+
+  xVa4 :=  StrToInt (edValorusu4.Text);
+  xUsu4 := xVa4;
+  Inc(xUsu4);
+  edValorusu4.Text := IntToStr(xUsu4);
+
+  if  edValorusu4.Text = IntToStr(xPontuacao) then
+  begin
+    if xJogador4 = True then ;
+    begin
+     Inc (xJog4Qeda);
+     lbTtalQuedaUsu4.Text := 'Total Quedas Jogador(s) 4:  '+ IntToStr( xJog4Qeda );
+     edValorusu1.Text := IntToStr( 0);
+     edValorusu2.Text := IntToStr( 0);
+     edValorusu3.Text := IntToStr( 0);
+     edValorusu4.Text := IntToStr( 0);
+     exit;
+    end;
+
+  end;
+end;
+
+procedure TfrmApplication.Image8Click(Sender: TObject);
+var
+xUsu3, xVa3 : Integer;
+
+begin
+  if edValorusu3.Text = IntToStr(0) then exit;
+
+  xVa3 :=  StrToInt (edValorusu3.Text);
+  xUsu3 := xVa3;
+  Inc(xUsu3,-1);
+  edValorusu3.Text := IntToStr(xUsu3);
+end;
+
+procedure TfrmApplication.Image9Click(Sender: TObject);
+var
+xUsu3, xVa3 : Integer;
+
+begin
+  if  xPontuacao <= 0 then
+  begin
+    {$IFDEF ANDROID}
+    Toast ('Informe a Pontuação Máxima em (configuração )', LongToast);
+    {$ENDIF ANDROID}
+    exit;
+  end;
+
+  xJogador1 := False;
+  xJogador2 := False;
+  xJogador3 := True;
+  xJogador4 := False;
+
+  xVa3 :=  StrToInt (edValorusu3.Text);
+  xUsu3 := xVa3;
+  Inc(xUsu3);
+  edValorusu3.Text := IntToStr(xUsu3);
+
+  if  edValorusu3.Text = IntToStr(xPontuacao) then
+  begin
+    if xJogador3 = True then ;
+    begin
+     Inc (xJog3Qeda);
+     lbTtalQuedaUsu3.Text := 'Total Quedas Jogador(s) 3:  '+ IntToStr( xJog3Qeda );
+     edValorusu1.Text := IntToStr( 0);
+     edValorusu2.Text := IntToStr( 0);
+     edValorusu3.Text := IntToStr( 0);
+     edValorusu4.Text := IntToStr( 0);
+     exit;
+    end;
+
+  end;
 
 end;
 
@@ -267,7 +421,7 @@ begin
     if xJogador1 = True then ;
     begin
      Inc (xQeda1);
-     lbTtalQuedaUsu1.Text := 'Total Quedas Jogador(s) 1:   '+ IntToStr( xQeda1 );
+     lbTtalQuedaUsu1.Text := 'Total Quedas Jogador(s) 1:  '+ IntToStr( xQeda1 );
      edValorusu1.Text := IntToStr( 0);
      edValorusu2.Text := IntToStr( 0);
      exit;
